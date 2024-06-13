@@ -77,7 +77,7 @@ exports.signup = async (req, res) => {
             accountType, contactNumber, otp } = req.body;
 
         // validation
-        if (!firstName || !lastName || !email || !password || !confirmPassword || !accountType || !otp) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !accountType) {
             return res.status(401).json({
                 success: false,
                 message: 'All fields are required..!'
@@ -88,7 +88,7 @@ exports.signup = async (req, res) => {
         if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
-                messgae: 'passowrd & confirm password does not match, Please try again..!'
+                message: 'password & confirm password does not match, Please try again..!'
             });
         }
 
@@ -104,24 +104,24 @@ exports.signup = async (req, res) => {
         }
 
         // find most recent otp stored for user in DB
-        const recentOtp = await OTP.findOne({ email }).sort({ createdAt: -1 }).limit(1);
-        // console.log('recentOtp ', recentOtp)
+        // const recentOtp = await OTP.findOne({ email }).sort({ createdAt: -1 }).limit(1);
+        // // console.log('recentOtp ', recentOtp)
 
-       
 
-        // if otp not found
-        if (!recentOtp || recentOtp.length == 0) {
-            return res.status(400).json({
-                success: false,
-                message: 'Otp not found in DB, please try again'
-            });
-        } else if (otp !== recentOtp.otp) {
-            // otp invalid
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid Otp'
-            })
-        }
+
+        // // if otp not found
+        // if (!recentOtp || recentOtp.length == 0) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: 'Otp not found in DB, please try again'
+        //     });
+        // } else if (otp !== recentOtp.otp) {
+        //     // otp invalid
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: 'Invalid Otp'
+        //     })
+        // }
 
         // hash - secure passoword
         let hashedPassword = await bcrypt.hash(password, 10);

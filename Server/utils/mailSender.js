@@ -1,14 +1,20 @@
 const nodemailer = require('nodemailer');
-
+const dotenv = require('dotenv');
+dotenv.config();
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+    }
+});
 const mailSender = async (email, title, body) => {
+    if (!email) {
+        console.error('No recipient email address defined.');
+        return;
+    }
     try {
-        const transporter = nodemailer.createTransport({
-            host: process.env.MAIL_HOST,
-            auth: {
-                user: process.env.MAIL_USER,
-                pass: process.env.MAIL_PASS
-            }
-        });
+
 
         const info = await transporter.sendMail({
             from: 'StudyNotion || by Sourabh Rawat',
@@ -21,7 +27,7 @@ const mailSender = async (email, title, body) => {
         return info;
     }
     catch (error) {
-        console.log('Error while sending mail (mailSender) - ', email);
+        console.log(error);
     }
 }
 

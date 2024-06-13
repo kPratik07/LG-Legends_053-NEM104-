@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express();
+const mailSender = require('./utils/mailSender.js')
+mailSender("adityasinghuo@gmail.com", "otp", "895");
 
 // packages
 const fileUpload = require('express-fileupload');
@@ -16,6 +18,7 @@ const userRoutes = require('./routes/user');
 const profileRoutes = require('./routes/profile');
 
 const courseRoutes = require('./routes/course');
+// const mailSender = require('./utils/mailSender');
 
 
 // middleware 
