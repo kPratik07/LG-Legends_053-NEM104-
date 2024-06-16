@@ -77,7 +77,7 @@ exports.signup = async (req, res) => {
             accountType, contactNumber, otp } = req.body;
 
         // validation
-        if (!firstName || !lastName || !email || !password || !confirmPassword || !accountType||!otp) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !accountType || !otp) {
             return res.status(401).json({
                 success: false,
                 message: 'All fields are required..!'
