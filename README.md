@@ -117,9 +117,9 @@ The Knowledge Knook platform's API is designed following the REST architectural 
 
 <img width='100%' src='./frontend/src/assets/Images/Contact_img.png' />
 
-### Ai Content Page
+<!-- ### Ai Content Page
 
-<img width='100%' src='./frontend/src/assets/Images/AI content.png' />
+<img width='100%' src='./frontend/src/assets/Images/AI content.png' /> -->
 
 ### Footer
 
