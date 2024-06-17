@@ -1,5 +1,3 @@
-<img height="70" src="./Images/Knowledge_Knook(logo).png"/>
-
 # Project Description 📝
 
 Knowledge Knook is a fully functional edu-tech platform that enables users to create, consume, and rate educational content.
@@ -109,15 +107,15 @@ The Knowledge Knook platform's API is designed following the REST architectural 
 
 ### Home Page Background 🏠
 
-<img width='100%' src='' />
+<img width='100%' src='./frontend/src/assets/Images/banner1.png' />
 
 ### About Page
 
-<img width='100%' src='./frontend/src/assets/Images/about.png' />
+<img width='100%' src='./frontend/src/assets/Images/About_img.png' />
 
 ### Contact Page
 
-<img width='100%' src='./frontend/src/assets/Images/contact.png' />
+<img width='100%' src='./frontend/src/assets/Images/Contact_img.png' />
 
 ### Ai Content Page
 
