@@ -97,19 +97,19 @@ exports.isInstructor = (req, res, next) => {
         if (req.user?.accountType != 'Instructor') {
             return res.status(401).json({
                 success: false,
-                messgae: 'This Page is protected only for Instructor'
+                message: 'This Page is protected only for Instructor'
             })
         }
         // go to next middleware
         next();
     }
     catch (error) {
-        console.log('Error while cheching user validity with Instructor accountType');
+        console.log('Error while checking user validity with Instructor accountType');
         console.log(error);
         return res.status(500).json({
             success: false,
             error: error.message,
-            messgae: 'Error while cheching user validity with Instructor accountType'
+            message: 'Error while checking user validity with Instructor accountType'
         })
     }
 }
@@ -122,19 +122,19 @@ exports.isAdmin = (req, res, next) => {
         if (req.user.accountType != 'Admin') {
             return res.status(401).json({
                 success: false,
-                messgae: 'This Page is protected only for Admin'
+                message: 'This Page is protected only for Admin'
             })
         }
         // go to next middleware
         next();
     }
     catch (error) {
-        console.log('Error while cheching user validity with Admin accountType');
+        console.log('Error while checking user validity with Admin accountType');
         console.log(error);
         return res.status(500).json({
             success: false,
             error: error.message,
-            messgae: 'Error while cheching user validity with Admin accountType'
+            message: 'Error while checking user validity with Admin accountType'
         })
     }
 }

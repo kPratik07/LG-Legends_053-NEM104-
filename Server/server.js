@@ -59,7 +59,6 @@ app.use('/api/v1/course', courseRoutes);
 
 // Default Route
 app.get('/', (req, res) => {
-    // console.log('Your server is up and running..!');
     res.send(`<div>
     This is Default Route  
     <p>Everything is OK</p>
