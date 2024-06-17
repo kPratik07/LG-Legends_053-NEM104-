@@ -1,7 +1,18 @@
 const express = require('express')
 const app = express();
+const cors=require('cors');
 const mailSender = require('./utils/mailSender.js')
-mailSender("adityasinghuo@gmail.com", "otp", "895");
+const sendOTP = (email) => {
+    const otp = generateOTP(); // Your function for generating the OTP
+    mailSender(email, "OTP for Signup", otp);
+  }
+  
+  // In your signup route, call the `sendOTP` function with the email address
+  app.post('/api/v1/auth/signup', (req, res) => {
+    const { email } = req.body;
+    sendOTP(email);
+    // Rest of your signup logic here
+  });
 
 // packages
 const fileUpload = require('express-fileupload');
@@ -22,6 +33,8 @@ const courseRoutes = require('./routes/course');
 
 
 // middleware 
+app.use(cors());
+const cors = require("cors");
 app.use(express.json()); // to parse json body
 app.use(cookieParser());
 app.use(

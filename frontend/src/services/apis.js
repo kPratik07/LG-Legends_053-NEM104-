@@ -1,4 +1,5 @@
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
+// console.log(BASE_URL);
 
 // AUTH ENDPOINTS
 export const endpoints = {
@@ -22,8 +23,8 @@ export const studentEndpoints = {
   COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
   SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
 }
-
-// COURSE ENDPOINTS
+console.log(studentEndpoints.COURSE_PAYMENT_API);
+// cOURSE ENDPOINTS
 export const courseEndpoints = {
   GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
   COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
