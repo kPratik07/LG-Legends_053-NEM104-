@@ -1,7 +1,8 @@
-const express = require('express');
+const express = require('express')
 const app = express();
+const cors=require('cors');
 const mailSender = require('./utils/mailSender.js')
-//mailSender("adityasinghuo@gmail.com", "otp", "895");
+mailSender("adityasinghuo@gmail.com", "otp", "895");
 
 // packages
 const fileUpload = require('express-fileupload');
@@ -22,6 +23,8 @@ const courseRoutes = require('./routes/course');
 
 
 // middleware 
+app.use(cors());
+const cors = require("cors");
 app.use(express.json()); // to parse json body
 app.use(cookieParser());
 app.use(
@@ -53,6 +56,7 @@ cloudinaryConnect();
 app.use('/api/v1/auth', userRoutes);
 app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/course', courseRoutes);
+
 
 
 
