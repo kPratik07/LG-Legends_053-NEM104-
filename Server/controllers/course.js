@@ -1,12 +1,13 @@
 const Course = require('../models/course');
 const User = require('../models/user');
-const Category = require('../models/category');
+// const Category = require('../models/category');
 const Section = require('../models/section')
 const SubSection = require('../models/subSection')
 const CourseProgress = require('../models/courseProgress')
-
-const { uploadImageToCloudinary, deleteResourceFromCloudinary } = require('../utils/imageUploader');
-const { convertSecondsToDuration } = require("../utils/secToDuration")
+const mongoose = require('mongoose');
+const {  deleteResourceFromCloudinary } = require('../utils/imageUploader');
+const { convertSecondsToDuration } = require("../utils/secToDuration");
+const Category = require('../models/category');
 
 
 
@@ -14,24 +15,24 @@ const { convertSecondsToDuration } = require("../utils/secToDuration")
 exports.createCourse = async (req, res) => {
     try {
         // extract data
-        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions: _instructions, status, tag: _tag } = req.body;
+        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions, status, tag} = req.body;
 
         // Convert the tag and instructions from stringified Array to Array
-        const tag = JSON.parse(_tag)
-        const instructions = JSON.parse(_instructions)
+        // const tag = JSON.parse(_tag)
+        // const instructions = JSON.parse(_instructions)
 
         // console.log("tag = ", tag)
         // console.log("instructions = ", instructions)
 
         // get thumbnail of course
-        const thumbnail = req.files?.thumbnailImage;
-
+        // const thumbnail = req.files?.thumbnailImage;
+        console.log(courseName, courseDescription, whatYouWillLearn, price, category, instructions, status, tag);
         // validation
         if (!courseName || !courseDescription || !whatYouWillLearn || !price
-            || !category || !thumbnail || !instructions.length || !tag.length) {
+            || !category || !instructions || !tag) {
             return res.status(400).json({
                 success: false,
-                message: 'All Fileds are required'
+                message: 'All Fields are required'
             });
         }
 
@@ -43,9 +44,14 @@ exports.createCourse = async (req, res) => {
         // we have insert user id in req.user , (payload , while auth ) 
         const instructorId = req.user.id;
 
-
+        console.log(category);
         // check given category is valid or not
-        const categoryDetails = await Category.findById(category);
+
+
+        // const categoryDetails = await Category.findById(new mongoose.Types.ObjectId(category));
+        const categoryDetails = await Category.aggregate([{ $match: { _id: new mongoose.Types.ObjectId(category) } }])
+
+        console.log(categoryDetails);
         if (!categoryDetails) {
             return res.status(401).json({
                 success: false,
@@ -54,14 +60,16 @@ exports.createCourse = async (req, res) => {
         }
 
 
-        // upload thumbnail to cloudinary
-        const thumbnailDetails = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
+         // //upload thumbnail to cloudinary
+        
+        /*const thumbnailDetails = await //uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
+        */
 
-        // create new course - entry in DB
-        const newCourse = await Course.create({
+        // // create new course - entry in DB
+         const newCourse = await Course.create({
             courseName, courseDescription, instructor: instructorId, whatYouWillLearn, price, category: categoryDetails._id,
-            tag, status, instructions, thumbnail: thumbnailDetails.secure_url, createdAt: Date.now(),
-        });
+             tag, status, instructions, createdAt: Date.now(),
+         });
 
         // add course id to instructor courses list, this is bcoz - it will show all created courses by instructor 
         await User.findByIdAndUpdate(instructorId,
@@ -110,7 +118,7 @@ exports.getAllCourses = async (req, res) => {
     try {
         const allCourses = await Course.find({},
             {
-                courseName: true, courseDescription: true, price: true, thumbnail: true, instructor: true,
+                courseName: true, courseDescription: true, price: true, instructor: true,
                 ratingAndReviews: true, studentsEnrolled: true
             })
             .populate({
@@ -305,15 +313,15 @@ exports.editCourse = async (req, res) => {
         }
 
         // If Thumbnail Image is found, update it
-        if (req.files) {
-            // console.log("thumbnail update")
-            const thumbnail = req.files.thumbnailImage
-            const thumbnailImage = await uploadImageToCloudinary(
-                thumbnail,
-                process.env.FOLDER_NAME
-            )
-            course.thumbnail = thumbnailImage.secure_url
-        }
+        // if (req.files) {
+        //     // console.log("thumbnail update")
+        //     const thumbnail = req.files.thumbnailImage
+        //     const thumbnailImage = await uploadImageToCloudinary(
+        //         thumbnail,
+        //         process.env.FOLDER_NAME
+        //     )
+        //     course.thumbnail = thumbnailImage.secure_url
+        // }
 
         // Update only the fields that are present in the request body
         for (const key in updates) {
