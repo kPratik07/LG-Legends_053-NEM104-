@@ -5,7 +5,7 @@ const Section = require('../models/section')
 const SubSection = require('../models/subSection')
 const CourseProgress = require('../models/courseProgress')
 const mongoose = require('mongoose');
-const {  deleteResourceFromCloudinary } = require('../utils/imageUploader');
+const { deleteResourceFromCloudinary } = require('../utils/imageUploader');
 const { convertSecondsToDuration } = require("../utils/secToDuration");
 const Category = require('../models/category');
 
@@ -15,7 +15,7 @@ const Category = require('../models/category');
 exports.createCourse = async (req, res) => {
     try {
         // extract data
-        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions, status, tag} = req.body;
+        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions, status, tag } = req.body;
 
         // Convert the tag and instructions from stringified Array to Array
         // const tag = JSON.parse(_tag)
@@ -60,16 +60,16 @@ exports.createCourse = async (req, res) => {
         }
 
 
-         // //upload thumbnail to cloudinary
-        
+        // //upload thumbnail to cloudinary
+
         /*const thumbnailDetails = await //uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
         */
 
         // // create new course - entry in DB
-         const newCourse = await Course.create({
+        const newCourse = await Course.create({
             courseName, courseDescription, instructor: instructorId, whatYouWillLearn, price, category: categoryDetails._id,
-             tag, status, instructions, createdAt: Date.now(),
-         });
+            tag, status, instructions, createdAt: Date.now(),
+        });
 
         // add course id to instructor courses list, this is bcoz - it will show all created courses by instructor 
         await User.findByIdAndUpdate(instructorId,

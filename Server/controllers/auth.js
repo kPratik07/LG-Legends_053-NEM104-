@@ -75,7 +75,7 @@ exports.signup = async (req, res) => {
         // extract data 
         const { firstName, lastName, email, password, confirmPassword,
             accountType, contactNumber, otp } = req.body;
-
+            
         // validation
         if (!firstName || !lastName || !email || !password || !confirmPassword || !accountType || !otp) {
             return res.status(401).json({
@@ -83,7 +83,7 @@ exports.signup = async (req, res) => {
                 message: 'All fields are required..!'
             });
         }
-
+          mailSender(email,"otp is",123)
         // check both pass matches or not
         if (password !== confirmPassword) {
             return res.status(400).json({
