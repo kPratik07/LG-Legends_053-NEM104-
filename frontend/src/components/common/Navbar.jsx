@@ -3,7 +3,7 @@ import { Link, matchPath, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { NavbarLinks } from "../../../data/navbar-links";
-import knowledgeKnookLogo from "../../assets/Logo/Knowledge-Knook.png";
+import knowledgeKnookLogo from "../../assets/Logo/Logo-Full-Light.png";
 import { fetchCourseCategories } from "./../../services/operations/courseDetailsAPI";
 
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
