@@ -77,7 +77,7 @@ const Navbar = () => {
       <div className="flex w-11/12 max-w-maxContent items-center justify-between ">
         {/* logo */}
         <Link to="/">
-          <img src={knowledgeKnookLogo} width={56} height={42} loading="lazy" />
+          <img src={knowledgeKnookLogo} width={120} height={72} loading="lazy" />
         </Link>
 
         {/* Nav Links - visible for only large devices*/}
