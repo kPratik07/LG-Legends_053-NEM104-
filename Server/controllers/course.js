@@ -13,104 +13,119 @@ const Category = require('../models/category');
 
 // ================ create new course ================
 exports.createCourse = async (req, res) => {
-    try {
-        // extract data
-        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions, status, tag } = req.body;
+  try {
+    // Extract data from the request body
+    let {
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      price,
+      category,
+      instructions: _instructions,
+      status,
+      tag: _tag,
+    } = req.body;
 
-        // Convert the tag and instructions from stringified Array to Array
-        // const tag = JSON.parse(_tag)
-        // const instructions = JSON.parse(_instructions)
+    // Convert the tag and instructions from stringified Array to Array
+    const tag = JSON.parse(_tag);
+    const instructions = JSON.parse(_instructions);
 
-        // console.log("tag = ", tag)
-        // console.log("instructions = ", instructions)
+    // Get thumbnail of course
+    const thumbnail = req.files?.thumbnailImage;
 
-        // get thumbnail of course
-        // const thumbnail = req.files?.thumbnailImage;
-        console.log(courseName, courseDescription, whatYouWillLearn, price, category, instructions, status, tag);
-        // validation
-        if (!courseName || !courseDescription || !whatYouWillLearn || !price
-            || !category || !instructions || !tag) {
-            return res.status(400).json({
-                success: false,
-                message: 'All Fields are required'
-            });
-        }
-
-        if (!status || status === undefined) {
-            status = "Draft";
-        }
-
-        // check current user is instructor or not , bcoz only instructor can create 
-        // we have insert user id in req.user , (payload , while auth ) 
-        const instructorId = req.user.id;
-
-        console.log(category);
-        // check given category is valid or not
-
-
-        // const categoryDetails = await Category.findById(new mongoose.Types.ObjectId(category));
-        const categoryDetails = await Category.aggregate([{ $match: { _id: new mongoose.Types.ObjectId(category) } }])
-
-        console.log(categoryDetails);
-        if (!categoryDetails) {
-            return res.status(401).json({
-                success: false,
-                message: 'Category Details not found'
-            })
-        }
-
-
-        // //upload thumbnail to cloudinary
-
-        /*const thumbnailDetails = await //uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
-        */
-
-        // // create new course - entry in DB
-        const newCourse = await Course.create({
-            courseName, courseDescription, instructor: instructorId, whatYouWillLearn, price, category: categoryDetails._id,
-            tag, status, instructions, createdAt: Date.now(),
-        });
-
-        // add course id to instructor courses list, this is bcoz - it will show all created courses by instructor 
-        await User.findByIdAndUpdate(instructorId,
-            {
-                $push: {
-                    courses: newCourse._id
-                }
-            },
-            { new: true }
-        );
-
-
-        // Add the new course to the Categories
-        await Category.findByIdAndUpdate(
-            { _id: category },
-            {
-                $push: {
-                    courses: newCourse._id,
-                },
-            },
-            { new: true }
-        );
-
-        // return response
-        res.status(200).json({
-            success: true,
-            data: newCourse,
-            message: 'New Course created successfully'
-        })
+    // Validation
+    if (
+      !courseName ||
+      !courseDescription ||
+      !whatYouWillLearn ||
+      !price ||
+      !category ||
+      !thumbnail ||
+      !instructions.length ||
+      !tag.length
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "All Fields are required",
+      });
     }
 
-    catch (error) {
-        console.log('Error while creating new course');
-        console.log(error);
-        res.status(500).json({
-            success: false,
-            error: error.message,
-            message: 'Error while creating new course'
-        })
+    // Set default status if not provided
+    if (!status) {
+      status = "Draft";
     }
-}
+
+    // Get the current user's ID (assuming it's available in req.user)
+    const instructorId = req.user.id;
+
+    // Check if the given category is valid
+    const categoryDetails = await Category.findById(category);
+    if (!categoryDetails) {
+      return res.status(401).json({
+        success: false,
+        message: "Category Details not found",
+      });
+    }
+
+    // Upload thumbnail to Cloudinary
+    const thumbnailDetails = await uploadImageToCloudinary(
+      thumbnail.path,
+      process.env.FOLDER_NAME
+    );
+
+    // Create new course - entry in DB
+    const newCourse = await Course.create({
+      courseName,
+      courseDescription,
+      instructor: instructorId,
+      whatYouWillLearn,
+      price,
+      category: categoryDetails._id,
+      tag,
+      status,
+      instructions,
+      thumbnail: thumbnailDetails.secure_url,
+      createdAt: Date.now(),
+    });
+
+    // Add course ID to instructor's courses list
+    await User.findByIdAndUpdate(
+      instructorId,
+      {
+        $push: {
+          courses: newCourse._id,
+        },
+      },
+      { new: true }
+    );
+
+    // Add the new course to the category's courses list
+    await Category.findByIdAndUpdate(
+      category,
+      {
+        $push: {
+          courses: newCourse._id,
+        },
+      },
+      { new: true }
+    );
+
+    // Return response
+    res.status(200).json({
+      success: true,
+      data: newCourse,
+      message: "New Course created successfully",
+    });
+  } catch (error) {
+    console.log("Error while creating new course");
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      message: "Error while creating new course",
+    });
+  }
+};
 
 
 // ================ show all courses ================
