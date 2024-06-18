@@ -5,7 +5,7 @@ const Section = require('../models/section')
 const SubSection = require('../models/subSection')
 const CourseProgress = require('../models/courseProgress')
 const mongoose = require('mongoose');
-const { deleteResourceFromCloudinary } = require('../utils/imageUploader');
+const { deleteResourceFromCloudinary, uploadImageToCloudinary } = require('../utils/imageUploader');
 const { convertSecondsToDuration } = require("../utils/secToDuration");
 const Category = require('../models/category');
 
