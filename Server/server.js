@@ -7,7 +7,7 @@ mailSender("adityasinghuo@gmail.com", "otp", "895");
 // packages
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
-const cors = require('cors');
+
 require('dotenv').config();
 
 // connection to DB and cloudinary
@@ -23,8 +23,8 @@ const courseRoutes = require('./routes/course');
 
 
 // middleware 
-app.use(cors());
-const cors = require("cors");
+
+
 app.use(express.json()); // to parse json body
 app.use(cookieParser());
 app.use(
