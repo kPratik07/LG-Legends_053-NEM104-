@@ -4,7 +4,7 @@ Knowledge Knook is a fully functional edu-tech platform that enables users to cr
 <br/>
 This platform is built using the **MERN stack**, which includes ReactJS, NodeJS, MongoDB, and ExpressJS.
 
-<h2>Live link 🌍📡 - [<a src="https://lg-legends-053-nem-104.vercel.app/"></a> ]</h2>
+<h2>Live link 🌍📡 - <a href="https://lg-legends-053-nem-104.vercel.app/">Visit Site</a></h2>
 
 <img width='100%' src='./frontend/src/assets/Images/banner1.png' />
 
