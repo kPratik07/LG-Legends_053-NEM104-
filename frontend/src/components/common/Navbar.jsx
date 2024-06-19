@@ -3,7 +3,7 @@ import { Link, matchPath, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { NavbarLinks } from "../../../data/navbar-links";
-import knowledgeKnookLogo from "../../assets/Logo/Knowledge-Knook.png";
+import knowledgeKnookLogo from "../../assets/Images/Knowledge-Knook(logo).jpeg";
 import { fetchCourseCategories } from "./../../services/operations/courseDetailsAPI";
 
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
@@ -77,7 +77,12 @@ const Navbar = () => {
       <div className="flex w-11/12 max-w-maxContent items-center justify-between ">
         {/* logo */}
         <Link to="/">
-          <img src={knowledgeKnookLogo} width={56} height={42} loading="lazy" />
+          <img
+            src={knowledgeKnookLogo}
+            width={140}
+            height={150}
+            loading="lazy"
+          />
         </Link>
 
         {/* Nav Links - visible for only large devices*/}
