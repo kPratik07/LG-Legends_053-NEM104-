@@ -14,6 +14,7 @@ import ReviewSlider from "../components/common/ReviewSlider";
 import Course_Slider from "../components/core/Catalog/Course_Slider";
 
 import { getCatalogPageData } from "../services/operations/pageAndComponentData";
+import { fetchCourseCategories } from "../services/operations/courseDetailsAPI";
 
 import { MdOutlineRateReview } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa";
@@ -63,19 +64,35 @@ const Home = () => {
 
   // get courses data
   const [CatalogPageData, setCatalogPageData] = useState(null);
-  const categoryID = "6506c9dff191d7ffdb4a3fe2"; // hard coded
+  const [categoryID, setCategoryID] = useState(null);
   const dispatch = useDispatch();
 
+  // Dynamically fetch the first available category with published courses
   useEffect(() => {
-    const fetchCatalogPageData = async () => {
-      const result = await getCatalogPageData(categoryID, dispatch);
-      setCatalogPageData(result);
-      // console.log("page data ==== ",CatalogPageData);
+    const fetchCategoryWithCourses = async () => {
+      const categories = await fetchCourseCategories();
+      if (categories && categories.length > 0) {
+        // Try each category until we find one with published courses
+        for (let i = 0; i < categories.length; i++) {
+          const result = await getCatalogPageData(categories[i]._id, dispatch);
+          if (
+            result &&
+            result.selectedCategory &&
+            result.selectedCategory.courses &&
+            result.selectedCategory.courses.length > 0
+          ) {
+            setCategoryID(categories[i]._id);
+            setCatalogPageData(result);
+            return;
+          }
+        }
+      }
+      // If no category with published courses is found, set null
+      setCategoryID(null);
+      setCatalogPageData(null);
     };
-    if (categoryID) {
-      fetchCatalogPageData();
-    }
-  }, [categoryID]);
+    fetchCategoryWithCourses();
+  }, []);
 
   // console.log('================ CatalogPageData?.selectedCourses ================ ', CatalogPageData)
 
