@@ -292,12 +292,8 @@ const Home = () => {
         <div className="mt-14 w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white">
           <InstructorSection />
 
-          {/* Reviws from Other Learner */}
-          <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
-            Reviews from other learners{" "}
-            <MdOutlineRateReview className="text-yellow-25" />
-          </h1>
-          <ReviewSlider />
+          {/* Add gap before footer */}
+          <div style={{ marginBottom: "2.5rem" }}></div>
         </div>
 
         {/*Footer */}
