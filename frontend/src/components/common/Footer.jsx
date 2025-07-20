@@ -23,16 +23,16 @@ const Community = ["Forums", "Chapters", "Events"];
 
 const Footer = () => {
   return (
-    <div className="bg-richblack-800 mx-7 rounded-3xl mb-10">
-      <div className="flex lg:flex-row gap-8 items-center justify-between w-11/12 max-w-maxContent text-richblack-400 leading-6 mx-auto relative py-14">
-        <div className="border-b w-[100%] flex flex-col lg:flex-row pb-5 border-richblack-700">
+    <div className="bg-richblack-800 mx-7 rounded-3xl mb-4">
+      <div className="flex lg:flex-row gap-4 items-center justify-between w-11/12 max-w-maxContent text-richblack-400 leading-6 mx-auto relative py-6">
+        <div className="border-b w-[100%] flex flex-col lg:flex-row pb-3 border-richblack-700">
           {/* Section 1 */}
-          <div className="lg:w-[50%] flex flex-wrap flex-row justify-between lg:border-r lg:border-richblack-700 pl-3 lg:pr-5 gap-3">
-            <div className="w-[30%] flex flex-col gap-3 lg:w-[30%] mb-7 lg:pl-0">
+          <div className="lg:w-[50%] flex flex-wrap flex-row justify-between lg:border-r lg:border-richblack-700 pl-3 lg:pr-5 gap-2">
+            <div className="w-[30%] flex flex-col gap-2 lg:w-[30%] mb-2 lg:pl-0">
               <img
                 src={KnowledgeKnook}
                 alt=""
-                className="object-contain w-24 h-24 rounded-full"
+                className="object-contain w-20 h-20 rounded-full"
               />
 
               <h1 className="text-richblack-50 font-semibold text-[16px]">
@@ -121,7 +121,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
+            <div className="w-[48%] lg:w-[30%] mb-2 lg:pl-0">
               <h1 className="text-richblack-50 font-semibold text-[16px]">
                 Resources
               </h1>
@@ -149,7 +149,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
+            <div className="w-[48%] lg:w-[30%] mb-2 lg:pl-0">
               <h1 className="text-richblack-50 font-semibold text-[16px]">
                 Plans
               </h1>
@@ -190,10 +190,10 @@ const Footer = () => {
           </div>
 
           {/* Section 2 */}
-          <div className="lg:w-[50%] flex flex-wrap flex-row justify-between pl-3 lg:pl-5 gap-3">
+          <div className="lg:w-[50%] flex flex-wrap flex-row justify-between pl-3 lg:pl-5 gap-2">
             {FooterLink2.map((ele, i) => {
               return (
-                <div key={i} className="w-[35%] lg:w-[30%] mb-7 lg:pl-0">
+                <div key={i} className="w-[35%] lg:w-[30%] mb-2 lg:pl-0">
                   <h1 className="text-richblack-50 font-semibold text-[16px]">
                     {ele.title}
                   </h1>
@@ -217,7 +217,7 @@ const Footer = () => {
       </div>
 
       {/* bottom footer */}
-      <div className="flex flex-row items-center justify-between w-11/12 max-w-maxContent text-richblack-400 mx-auto pb-14 text-sm">
+      <div className="flex flex-row items-center justify-between w-11/12 max-w-maxContent text-richblack-400 mx-auto pb-4 text-sm">
         {/* Section 1 */}
         <div className="flex justify-between lg:items-start items-center flex-col lg:flex-row gap-3 w-full">
           <div className="flex ">
